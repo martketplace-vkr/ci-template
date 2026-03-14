@@ -6,9 +6,6 @@ on:
       service_name:
         required: true
         type: string
-      values_file:
-        required: true
-        type: string
       namespace:
         required: true
         type: string
@@ -59,14 +56,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: martketplace-vkr/ci-template
-          path: .
+          path: ci-template
 
       - name: Deploy
         run: |
           helm upgrade --install \
           ${{ inputs.service_name }} \
-          ./helm/microservice \
-          -f $GITHUB_WORKSPACE/.deploy/values.yaml \
+          ./ci-template/helm/microservice \
+          -f ${{ github.workspace }}/.deploy/values.yaml \
           --set image.tag=${{ github.sha }} \
           --namespace ${{ inputs.namespace }} \
           --create-namespace
