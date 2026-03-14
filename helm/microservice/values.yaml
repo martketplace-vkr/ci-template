@@ -3,7 +3,7 @@ serviceName: app
 replicas: 1
 
 image:
-  repository: gotem2281/app
+  repository: ${{ secrets.DOCKER_USERNAME }}/app
   tag: latest
   pullPolicy: Always
 
