@@ -9,6 +9,9 @@ on:
       values_file:
         required: true
         type: string
+      namespace:
+        required: true
+        type: string
 
 jobs:
 
