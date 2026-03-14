@@ -43,6 +43,12 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+      
+      - name: Checkout Helm chart
+        uses: actions/checkout@v4
+        with:
+          repository: martketplace-vkr/ci-template
+          path: helm
 
       - name: Deploy
         run: |
@@ -50,4 +56,6 @@ jobs:
           ${{ inputs.service_name }} \
           ./helm/microservice \
           -f ${{ inputs.values_file }} \
-          --set image.tag=${{ github.sha }}
+          --set image.tag=${{ github.sha }} \
+          --namespace ${{ inputs.namespace }} \
+          --create-namespace
