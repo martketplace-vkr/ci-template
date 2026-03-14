@@ -12,6 +12,13 @@ on:
       namespace:
         required: true
         type: string
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+      KUBE_CONFIG:
+        required: true
 
 jobs:
 
