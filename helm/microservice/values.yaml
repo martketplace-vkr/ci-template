@@ -1,4 +1,5 @@
 serviceName: app
+namespace: marketplace-vkr
 
 replicas: 1
 
