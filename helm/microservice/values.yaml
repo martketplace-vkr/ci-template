@@ -4,7 +4,6 @@ namespace: marketplace-vkr
 replicas: 1
 
 image:
-  repository: ${{ secrets.DOCKER_USERNAME }}/app
   tag: latest
   pullPolicy: Always
 

@@ -21,6 +21,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_REPOSITORY: ${{ secrets.DOCKER_USERNAME }}/${{ inputs.service_name }}
+      IMAGE_TAG: ${{ github.sha }}
 
     steps:
 
@@ -35,11 +38,11 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ inputs.service_name }}:${{ github.sha }} .
+          docker build -t $IMAGE_REPOSITORY:$IMAGE_TAG .
 
       - name: Push image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ inputs.service_name }}:${{ github.sha }}
+          docker push $IMAGE_REPOSITORY:$IMAGE_TAG
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
@@ -64,6 +67,7 @@ jobs:
           ${{ inputs.service_name }} \
           ./ci-template/helm/microservice \
           -f ${{ github.workspace }}/.deploy/values.yaml \
-          --set image.tag=${{ github.sha }} \
+          --set-string image.repository=$IMAGE_REPOSITORY \
+          --set-string image.tag=$IMAGE_TAG \
           --namespace ${{ inputs.namespace }} \
           --create-namespace
