@@ -25,3 +25,5 @@ ingress:
   enabled: false
   host: example.com
   port: 8000
+  annotations: {}
+  tls: []
